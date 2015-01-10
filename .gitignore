@@ -3,4 +3,8 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
-release.properties
+release.config
+atlassian-ide-plugin.xml
+.idea
+*.iml
+build.sh

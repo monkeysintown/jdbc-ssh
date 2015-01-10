@@ -1,0 +1,18 @@
+<configuration scan="true" scanPeriod="5 seconds">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are  by default assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        %highlight(%-5level)
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %boldYellow(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.m11n.jdbc.ssh" level="DEBUG" />
+
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
