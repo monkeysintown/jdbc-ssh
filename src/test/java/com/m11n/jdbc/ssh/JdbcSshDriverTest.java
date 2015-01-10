@@ -7,22 +7,17 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.Enumeration;
-import java.util.Properties;
 
-import static org.junit.Assert.*;
-
-import static com.m11n.jdbc.ssh.Constants.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class JdbcSshDriverTest {
     private static final Logger logger = LoggerFactory.getLogger(JdbcSshDriverTest.class);
 
     private String url;
-    private Properties config = new Properties();
 
     @Before
     public void setUp() {
-        config.setProperty(CONFIG_HOST, System.getProperty("host"));
-        config.setProperty(CONFIG_PORT_REMOTE, System.getProperty("remotePort"));
         url = System.getProperty("url");
     }
 
@@ -44,7 +39,7 @@ public class JdbcSshDriverTest {
 
     @Test
     public void testMetadata() throws SQLException {
-        Connection connection = DriverManager.getConnection(url, config);
+        Connection connection = DriverManager.getConnection(url);
 
         DatabaseMetaData metadata = connection.getMetaData();
 

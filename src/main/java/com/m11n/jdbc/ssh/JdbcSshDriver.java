@@ -49,13 +49,14 @@ public class JdbcSshDriver implements Driver {
             return null;
         }
 
-        String realUrl = extractUrl(url);
-        Driver driver = findDriver(realUrl);
-
         JdbcSshConfiguration config = configure(url, info);
 
         tunnel = new JdbcSshTunnel(config);
         tunnel.start();
+
+        // TODO: check if this is enough for most common drivers
+        String realUrl = extractUrl(url).replaceFirst(":\\d+", ":" + tunnel.getLocalPort().toString());
+        Driver driver = findDriver(realUrl);
 
         return driver.connect(realUrl, config.getProperties());
     }
@@ -83,8 +84,8 @@ public class JdbcSshDriver implements Driver {
                 }
             }
 
-            properties.setProperty(CONFIG_HOST_FORWARD, u.getHost());
-            properties.setProperty(CONFIG_PORT_LOCAL, u.getPort()+"");
+            properties.setProperty(CONFIG_HOST_REMOTE, u.getHost());
+            properties.setProperty(CONFIG_PORT_REMOTE, u.getPort()+"");
 
             // NOTE: assume same username and password for SSH connection and database if not set explicitly
             if(properties.getProperty("user")!=null && properties.getProperty(CONFIG_USERNAME)==null) {

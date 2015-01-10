@@ -6,6 +6,8 @@ import com.jcraft.jsch.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static com.m11n.jdbc.ssh.Constants.*;
 
 public class JdbcSshTunnel {
@@ -15,8 +17,14 @@ public class JdbcSshTunnel {
 
     private Session session;
 
+    private AtomicInteger localPort;
+
     public JdbcSshTunnel(JdbcSshConfiguration config) {
         this.config = config;
+
+        localPort = new AtomicInteger(Integer.valueOf(config.getProperty(CONFIG_PORT_AUTO)));
+
+        logger.info("Automatic local port assignment starts at: {}", localPort.get());
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
@@ -55,11 +63,11 @@ public class JdbcSshTunnel {
             Channel channel = session.openChannel("shell");
             channel.connect();
 
-            Integer localPort = Integer.valueOf(config.getProperty(CONFIG_PORT_LOCAL));
-            String forwardHost = config.getProperty(CONFIG_HOST_FORWARD);
+            //Integer localPort = Integer.valueOf(config.getProperty(CONFIG_PORT_LOCAL));
+            String forwardHost = config.getProperty(CONFIG_HOST_REMOTE);
             Integer remotePort = Integer.valueOf(config.getProperty(CONFIG_PORT_REMOTE));
 
-            assignedPort = session.setPortForwardingL(localPort, forwardHost, remotePort);
+            assignedPort = session.setPortForwardingL(localPort.incrementAndGet(), forwardHost, remotePort);
 
             if(logger.isDebugEnabled()) {
                 logger.info("Server version: {}", session.getServerVersion());
@@ -86,5 +94,9 @@ public class JdbcSshTunnel {
                 logger.debug("Disconnected.");
             }
         }
+    }
+
+    public Integer getLocalPort() {
+        return localPort.get();
     }
 }

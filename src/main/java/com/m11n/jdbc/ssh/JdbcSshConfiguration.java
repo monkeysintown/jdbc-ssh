@@ -21,7 +21,7 @@ public class JdbcSshConfiguration {
         try {
             InputStream is;
 
-            String path = System.getProperty("jdbc.ssh.config")==null ? "ssh.properties" : System.getProperty("jdbc.ssh.config");
+            String path = System.getProperty(CONFIG)==null ? "ssh.properties" : System.getProperty(CONFIG);
 
             File f = new File(path);
 
@@ -62,6 +62,9 @@ public class JdbcSshConfiguration {
         }
         if(c.getProperty(CONFIG_PORT)==null) {
             c.put(CONFIG_PORT, "22");
+        }
+        if(c.getProperty(CONFIG_PORT_AUTO)==null) {
+            c.put(CONFIG_PORT_AUTO, "20000");
         }
 
         return c;
