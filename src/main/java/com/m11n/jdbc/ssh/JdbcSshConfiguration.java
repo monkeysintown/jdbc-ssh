@@ -43,6 +43,15 @@ public class JdbcSshConfiguration {
 
     public JdbcSshConfiguration(Properties c) {
         this();
+
+        // NOTE: assume same username and password for SSH connection and database if not set explicitly
+        if(c.getProperty("user")!=null && c.getProperty(CONFIG_USERNAME) == null) {
+            config.setProperty(CONFIG_USERNAME, c.getProperty("user"));
+        }
+        if(c.getProperty("password")!=null && c.getProperty(CONFIG_PASSWORD) == null) {
+            config.setProperty(CONFIG_PASSWORD, c.getProperty("password"));
+        }
+
         for(String key : CONFIG_ALL) {
             if(c.getProperty(key)!=null && !"".equals(c.getProperty(key).trim())) {
                 config.setProperty(key, c.getProperty(key));
@@ -65,13 +74,6 @@ public class JdbcSshConfiguration {
         }
         if(c.getProperty(CONFIG_PORT_AUTO)==null) {
             c.put(CONFIG_PORT_AUTO, "20000");
-        }
-        // NOTE: assume same username and password for SSH connection and database if not set explicitly
-        if(c.getProperty("user")!=null && c.getProperty(CONFIG_USERNAME)==null) {
-            c.setProperty(CONFIG_USERNAME, c.getProperty("user"));
-        }
-        if(c.getProperty("password")!=null && c.getProperty(CONFIG_PASSWORD)==null) {
-            c.setProperty(CONFIG_PASSWORD, c.getProperty("password"));
         }
 
         return c;
