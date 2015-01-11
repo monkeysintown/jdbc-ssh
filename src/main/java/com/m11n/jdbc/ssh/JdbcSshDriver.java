@@ -87,14 +87,6 @@ public class JdbcSshDriver implements Driver {
             properties.setProperty(CONFIG_HOST_REMOTE, u.getHost());
             properties.setProperty(CONFIG_PORT_REMOTE, u.getPort()+"");
 
-            // NOTE: assume same username and password for SSH connection and database if not set explicitly
-            if(properties.getProperty("user")!=null && properties.getProperty(CONFIG_USERNAME)==null) {
-                properties.setProperty(CONFIG_USERNAME, properties.getProperty("user"));
-            }
-            if(properties.getProperty("password")!=null && properties.getProperty(CONFIG_PASSWORD)==null) {
-                properties.setProperty(CONFIG_PASSWORD, properties.getProperty("password"));
-            }
-
             config = new JdbcSshConfiguration(properties);
         } catch (Exception e) {
             throw new SQLException(e);
