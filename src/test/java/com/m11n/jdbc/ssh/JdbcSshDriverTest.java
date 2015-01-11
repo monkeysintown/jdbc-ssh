@@ -22,6 +22,7 @@ import java.security.PublicKey;
 import java.sql.*;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Properties;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -33,18 +34,28 @@ public class JdbcSshDriverTest {
 
     private Server dbServer;
 
+    private SshServer sshd;
+
+    static {
+        System.setProperty("h2.baseDir", "/tmp");
+    }
+
     @Before
     public void setUp() throws Exception {
         url = System.getProperty("url");
 
-        dbServer = Server.createTcpServer("-tcpPort" , "9292" , "-tcpAllowOthers").start();
+        dbServer = Server.createTcpServer("-tcpPort" , "8092" , "-tcpAllowOthers").start();
 
         logger.info("Database server status: {}", dbServer.getStatus());
+
+        sshd = createTestSshServer();
+
     }
 
     @After
     public void shutdown() throws Exception {
         dbServer.stop();
+        sshd.stop();
     }
 
     @Test
@@ -65,9 +76,28 @@ public class JdbcSshDriverTest {
 
     @Test
     public void testMetadata() throws Exception {
-        SshServer sshd = createTestSshServer();
-
         Connection connection = DriverManager.getConnection(url);
+
+        DatabaseMetaData metadata = connection.getMetaData();
+
+        // Get all the tables and views
+        String[] tableType = {"TABLE"};
+        java.sql.ResultSet tables = metadata.getTables(null, null, "%", tableType);
+
+        assertNotNull(tables);
+
+        String tableName;
+        while (tables.next()) {
+            tableName = tables.getString(3);
+
+            logger.info("Table: {}", tableName);
+        }
+    }
+
+    @Test
+    public void testRealDriver() throws Exception {
+        //Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost:8092/mem:test;DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=3;TRACE_LEVEL_SYSTEM_OUT=3");
+        Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost:8092/mem:test;DB_CLOSE_DELAY=-1");
 
         DatabaseMetaData metadata = connection.getMetaData();
 
@@ -87,18 +117,19 @@ public class JdbcSshDriverTest {
 
 
     private SshServer createTestSshServer() throws Exception {
-        SshServer sshd = SshServer.setUpDefaultServer();
+        Properties p = new Properties();
+        p.load(JdbcSshDriver.class.getClassLoader().getResourceAsStream("ssh.properties"));
+
+        sshd = SshServer.setUpDefaultServer();
         sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider("target/hostkey.rsa", "RSA"));
-        //sshd.setShellFactory(new EchoShellFactory());
         sshd.setPasswordAuthenticator(new BogusPasswordAuthenticator());
         sshd.setCommandFactory(new CommandFactory() {
             public Command createCommand(String command) {
                 return new UnknownCommand(command);
             }
         });
-        sshd.setHost("localhost");
-        sshd.setPort(2222);
-        //sshd.getProperties().put(SshServer.AUTH_METHODS, "publickey");
+        sshd.setHost(p.getProperty(Constants.CONFIG_HOST));
+        sshd.setPort(Integer.valueOf(p.getProperty(Constants.CONFIG_PORT)));
         sshd.setPublickeyAuthenticator(new TestCachingPublicKeyAuthenticator());
         sshd.start();
         sshd.getPort();

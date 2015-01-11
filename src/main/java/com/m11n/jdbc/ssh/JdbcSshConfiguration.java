@@ -57,6 +57,8 @@ public class JdbcSshConfiguration {
                 config.setProperty(key, c.getProperty(key));
             }
         }
+
+        logger.debug("Configuration: {}");
     }
 
     private Properties setDefaults(Properties c) {
