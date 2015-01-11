@@ -56,6 +56,7 @@ public class JdbcSshDriver implements Driver {
 
         // TODO: check if this is enough for most common drivers
         String realUrl = extractUrl(url).replaceFirst(":\\d+", ":" + tunnel.getLocalPort().toString());
+        realUrl = realUrl.replaceFirst("://(\\d+\\.\\d+\\.\\d+\\.\\d+|[a-zA-Z0-9_\\-\\.]*)", "://localhost");
         Driver driver = findDriver(realUrl);
 
         return driver.connect(realUrl, config.getProperties());
