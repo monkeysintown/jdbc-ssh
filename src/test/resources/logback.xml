@@ -11,6 +11,8 @@
     </appender>
 
     <logger name="com.m11n.jdbc.ssh" level="DEBUG" />
+    <logger name="org.apache.sshd" level="INFO" />
+    <logger name="org.h2" level="DEBUG" />
 
     <root level="ERROR">
         <appender-ref ref="STDOUT" />
