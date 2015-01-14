@@ -5,11 +5,25 @@ JDBC driver over SSH tunnel
 
 ## Build
 
-If you want to run the tests against your own database (no modifications are made in the database):
+If you just want to compile the project without running the tests:
 
 ```
-mvn -Durl="jdbc:ssh:mysql://127.0.0.1:3306/xxx?user=xxx&password=xxx&jdbc.ssh.host=xxx.xxx.xxx.xxx" install
+mvn -DskipTests clean install
 ```
 
-NOTE: if your SSH server is running on the default port 22 the only additional parameter you have to assign is 
-"jdbc.ssh.host" (IP or hostname of your SSH server).
+If you want to run the tests (Derby and H2 in server mode):
+
+```
+mvn -Djdbc.ssh.username="xxx" -Djdbc.ssh.password="xxx" clean install
+```
+
+NOTE: 
+
+If your SSH server is not running on the default port 22 and/or localhost then you can change those paramaters:
+
+```
+mvn -Djdbc.ssh.username="xxx" -Djdbc.ssh.password="xxx" -Djdbc.ssh.host="192.168.0.1" -Djdbc.ssh.port="2222" clean install
+```
+
+At the moment a locally running SSH server is needed for the tests. The embedded SSH server in the unit tests is not yet 
+ready (authentication works, but port forwarding fails at the moment).

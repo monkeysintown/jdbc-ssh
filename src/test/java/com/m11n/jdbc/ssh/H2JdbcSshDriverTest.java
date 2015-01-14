@@ -1,29 +1,31 @@
 package com.m11n.jdbc.ssh;
 
 import org.h2.tools.Server;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class H2JdbcSshDriverTest extends JdbcSshDriverTest {
     private static final Logger logger = LoggerFactory.getLogger(H2JdbcSshDriverTest.class);
 
-    private Server dbServerH2;
+    private static Server dbServerH2;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void init() throws Exception {
         setUpH2();
         setUpSshd();
     }
 
-    private void setUpH2() throws Exception {
-        System.setProperty("h2.baseDir", "./target/h2");
+    @AfterClass
+    public static void cleanup() throws Exception {
+        dbServerH2.shutdown();
+        shutDownSshd();
+    }
 
-        dbServerH2 = Server.createTcpServer("-tcpPort" , "8092" , "-tcpAllowOthers", "-tcpDaemon", "-trace").start();
-
-        logger.info("Database server status: u = {} - s = {} ({})", dbServerH2.getURL(), dbServerH2.getStatus(), dbServerH2.isRunning(true));
-
+    @Before
+    public void setUp() throws Exception {
         sshUrl = System.getProperty("url")!=null ? System.getProperty("url") : "jdbc:ssh:h2:" + dbServerH2.getURL() + "/test";
         realUrl = System.getProperty("realUrl")!=null ? System.getProperty("realUrl") : "jdbc:h2:" + dbServerH2.getURL() + "/test";
 
@@ -33,9 +35,12 @@ public class H2JdbcSshDriverTest extends JdbcSshDriverTest {
         logger.info("JDBC URL (real): {}", realUrl);
     }
 
-    @After
-    public void shutdown() throws Exception {
-        dbServerH2.stop();
-        sshd.stop();
+    private static void setUpH2() throws Exception {
+        System.setProperty("h2.baseDir", "./target/h2");
+        System.setProperty("jdbc.ssh.port.auto", "20000");
+
+        dbServerH2 = Server.createTcpServer("-tcpPort" , "8092" , "-tcpAllowOthers", "-tcpDaemon").start();
+
+        logger.info("Database server status: u = {} - s = {} ({})", dbServerH2.getURL(), dbServerH2.getStatus(), dbServerH2.isRunning(true));
     }
 }

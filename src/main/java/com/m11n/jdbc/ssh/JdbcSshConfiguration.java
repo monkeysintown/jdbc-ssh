@@ -63,22 +63,35 @@ public class JdbcSshConfiguration {
 
     private Properties setDefaults(Properties c) {
         if(c.getProperty("Compression")==null) {
-            c.setProperty("Compression", "no");
+            c.put("Compression", getSystemPropertyOrDefault("Compression", "no"));
         }
-        if(c.getProperty("ConnectionAttempts")==null) {
-            c.setProperty("ConnectionAttempts", "2");
+        if(c.getProperty("ConnectionAttempts") == null) {
+            c.put("ConnectionAttempts", getSystemPropertyOrDefault("ConnectionAttempts", "2"));
         }
         if(c.getProperty("StrictHostKeyChecking")==null) {
-            c.put("StrictHostKeyChecking", "no");
+            c.put("StrictHostKeyChecking", getSystemPropertyOrDefault("StrictHostKeyChecking", "no"));
+        }
+        if(c.getProperty(CONFIG_HOST)==null) {
+            c.put(CONFIG_HOST, getSystemPropertyOrDefault(CONFIG_HOST, "localhost"));
         }
         if(c.getProperty(CONFIG_PORT)==null) {
-            c.put(CONFIG_PORT, "22");
+            c.put(CONFIG_PORT, getSystemPropertyOrDefault(CONFIG_PORT, "22"));
         }
         if(c.getProperty(CONFIG_PORT_AUTO)==null) {
-            c.put(CONFIG_PORT_AUTO, "20000");
+            c.put(CONFIG_PORT_AUTO, getSystemPropertyOrDefault(CONFIG_PORT_AUTO, "20000"));
+        }
+        if(c.getProperty(CONFIG_USERNAME)==null) {
+            c.put(CONFIG_USERNAME, System.getProperty(CONFIG_USERNAME));
+        }
+        if(c.getProperty(CONFIG_PASSWORD)==null) {
+            c.put(CONFIG_PASSWORD, System.getProperty(CONFIG_PASSWORD));
         }
 
         return c;
+    }
+
+    private String getSystemPropertyOrDefault(String name, String defaultValue) {
+        return System.getProperty(name)==null ? defaultValue : System.getProperty(name);
     }
 
     public Properties getProperties() {

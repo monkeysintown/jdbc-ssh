@@ -6,6 +6,8 @@ import com.jcraft.jsch.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.m11n.jdbc.ssh.Constants.*;
@@ -66,6 +68,17 @@ public class JdbcSshTunnel {
             String forwardHost = config.getProperty(CONFIG_HOST_REMOTE);
             Integer remotePort = Integer.valueOf(config.getProperty(CONFIG_PORT_REMOTE));
 
+            int nextPort = localPort.incrementAndGet();
+
+            // NOTE: scan max next 10 ports
+            for(int i=0; i<10; i++) {
+                if(isPortOpen("127.0.0.1", nextPort)) {
+                    break;
+                }
+
+                nextPort = localPort.incrementAndGet();
+            }
+
             assignedPort = session.setPortForwardingL(localPort.incrementAndGet(), forwardHost, remotePort);
 
             if(logger.isDebugEnabled()) {
@@ -97,5 +110,16 @@ public class JdbcSshTunnel {
 
     public Integer getLocalPort() {
         return localPort.get();
+    }
+
+    public boolean isPortOpen(String ip, int port) {
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(ip, port), 1000);
+            socket.close();
+            return false;
+        } catch (Exception ex) {
+            return true;
+        }
     }
 }

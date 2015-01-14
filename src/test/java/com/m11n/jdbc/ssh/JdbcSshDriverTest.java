@@ -25,27 +25,34 @@ public abstract class JdbcSshDriverTest {
 
     protected String realUrl;
 
-    protected SshServer sshd;
+    protected static SshServer sshd;
 
     protected String sql;
 
-    protected void setUpSshd() throws Exception {
-        Properties p = new Properties();
-        p.load(JdbcSshDriver.class.getClassLoader().getResourceAsStream("ssh.properties"));
+    protected static void setUpSshd() throws Exception {
+        if(sshd==null && "true".equals(System.getProperty("sshd"))) {
+            Properties p = new Properties();
+            p.load(JdbcSshDriver.class.getClassLoader().getResourceAsStream("ssh.properties"));
 
-        sshd = SshServer.setUpDefaultServer();
-        sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider("target/hostkey.rsa", "RSA"));
-        sshd.setPasswordAuthenticator(new BogusPasswordAuthenticator());
-        sshd.setCommandFactory(new CommandFactory() {
-            public Command createCommand(String command) {
-                return new UnknownCommand(command);
-            }
-        });
-        sshd.setHost(p.getProperty(Constants.CONFIG_HOST));
-        sshd.setPort(Integer.valueOf(p.getProperty(Constants.CONFIG_PORT)));
-        sshd.setPublickeyAuthenticator(new TestCachingPublicKeyAuthenticator());
-        sshd.start();
-        sshd.getPort();
+            sshd = SshServer.setUpDefaultServer();
+            sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider("target/hostkey.rsa", "RSA"));
+            sshd.setPasswordAuthenticator(new BogusPasswordAuthenticator());
+            sshd.setPublickeyAuthenticator(new TestCachingPublicKeyAuthenticator());
+            sshd.setCommandFactory(new CommandFactory() {
+                public Command createCommand(String command) {
+                    return new UnknownCommand(command);
+                }
+            });
+            sshd.setHost(p.getProperty(Constants.CONFIG_HOST));
+            sshd.setPort(Integer.valueOf(p.getProperty(Constants.CONFIG_PORT)));
+            sshd.start();
+        }
+    }
+
+    protected static void shutDownSshd() throws Exception {
+        if(sshd!=null && !sshd.isClosed()) {
+            sshd.stop();
+        }
     }
 
     @Test
@@ -66,29 +73,23 @@ public abstract class JdbcSshDriverTest {
 
     @Test
     public void testSshDriver() throws Exception {
-        // TODO: fix this!
-        try {
-            Connection connection = DriverManager.getConnection(sshUrl);
+        Connection connection = DriverManager.getConnection(sshUrl);
 
-            Statement s = connection.createStatement();
-            s.execute(sql);
+        logger.info("Info: {}", connection.getClientInfo());
 
-            DatabaseMetaData metadata = connection.getMetaData();
+        DatabaseMetaData metadata = connection.getMetaData();
 
-            // Get all the tables and views
-            String[] tableType = {"TABLE"};
-            java.sql.ResultSet tables = metadata.getTables(null, null, "%", tableType);
+        // Get all the tables and views
+        String[] tableType = {"TABLE"};
+        java.sql.ResultSet tables = metadata.getTables(null, null, "%", tableType);
 
-            assertNotNull(tables);
+        assertNotNull(tables);
 
-            String tableName;
-            while (tables.next()) {
-                tableName = tables.getString(3);
+        String tableName;
+        while (tables.next()) {
+            tableName = tables.getString(3);
 
-                logger.info("Table: {}", tableName);
-            }
-        } catch (Exception e) {
-            logger.error(e.toString(), e);
+            logger.info("Table: {}", tableName);
         }
     }
 

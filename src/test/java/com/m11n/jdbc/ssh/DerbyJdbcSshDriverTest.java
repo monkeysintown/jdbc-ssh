@@ -2,7 +2,9 @@ package com.m11n.jdbc.ssh;
 
 import org.apache.derby.drda.NetworkServerControl;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,20 +14,23 @@ import java.net.InetAddress;
 public class DerbyJdbcSshDriverTest extends JdbcSshDriverTest {
     private static final Logger logger = LoggerFactory.getLogger(DerbyJdbcSshDriverTest.class);
 
-    private NetworkServerControl dbServerDerby;
+    private static NetworkServerControl dbServerDerby;
 
-    static {
-        System.setProperty("h2.baseDir", "/tmp");
-    }
-
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void init() throws Exception {
         setUpDerby();
         setUpSshd();
     }
 
-    private void setUpDerby() throws Exception {
+    @AfterClass
+    public static void cleanup() throws Exception {
+        dbServerDerby.shutdown();
+        shutDownSshd();
+    }
+
+    private static void setUpDerby() throws Exception {
         System.setProperty("derby.drda.startNetworkServer", "true");
+        System.setProperty("jdbc.ssh.port.auto", "30000");
 
         dbServerDerby = new NetworkServerControl(InetAddress.getByName("localhost"),1527);
         dbServerDerby.start(new PrintWriter(System.out, true));
@@ -40,18 +45,18 @@ public class DerbyJdbcSshDriverTest extends JdbcSshDriverTest {
             }
             Thread.sleep(10);
         }
+    }
 
+    @Before
+    public void setUp() throws Exception {
         sshUrl = System.getProperty("url")!=null ? System.getProperty("url") : "jdbc:ssh:derby://127.0.0.1:1527/target/test;create=true";
         realUrl = System.getProperty("realUrl")!=null ? System.getProperty("realUrl") : "jdbc:derby://127.0.0.1:1527/target/test;create=true";
 
+        logger.info("JDBC URL (SSH) : {}", sshUrl);
+        logger.info("JDBC URL (real): {}", realUrl);
+
         sql = "CREATE TABLE TEST_SSH(ID INT PRIMARY KEY, NAME VARCHAR(255))";
 
-        logger.info("JDBC Runtime Info: {}", dbServerDerby.getRuntimeInfo());
-    }
-
-    @After
-    public void shutdown() throws Exception {
-        dbServerDerby.shutdown();
-        sshd.stop();
+        logger.info("JDBC Runtime Info:\n{}", dbServerDerby.getRuntimeInfo());
     }
 }
