@@ -17,7 +17,7 @@ import java.io.OutputStream;
  * System.setErr(new PrintStream(new LoggingOutputStream(Logger.getRootCategory()), true));
  *
  * // make sure everything sent to System.out is also logged
- * System.setOut(new PrintStream(new LoggingOutputStream(Logger.getRootCategory(), Level.INFO), true));
+ * System.setOut(new PrintStream(new LoggingOutputStream(Logger.getRootCategory()), true));
  * --
  *
  * @author https://github.com/vidakovic[Aleksandar Vidakovic]
