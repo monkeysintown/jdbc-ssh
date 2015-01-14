@@ -34,6 +34,8 @@ You can find the latest releases here:
 
 [ ![Download](https://api.bintray.com/packages/cheetah/monkeysintown/jdbc-ssh/images/download.svg) ](https://bintray.com/cheetah/monkeysintown/jdbc-ssh/_latestVersion)
 
+... or setup your Maven dependencies:
+
 ```xml
 <dependency>
     <groupId>com.m11n.jdbc.ssh</groupId>
@@ -42,7 +44,7 @@ You can find the latest releases here:
 </dependency>
 ```
 
-Setup the Bintrays JCenter repository in your pom.xml:
+... and configure the Bintray's JCenter repository in your pom.xml:
  
 ```xml
 ...
