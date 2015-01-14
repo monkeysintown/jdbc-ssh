@@ -45,22 +45,29 @@ public class JdbcSshTunnel {
 
             String username = config.getProperty(CONFIG_USERNAME);
             String password = config.getProperty(CONFIG_PASSWORD);
-            String key = config.getProperty(CONFIG_KEY);
+            String keyPrivate = config.getProperty(CONFIG_KEY_PRIVATE);
+            String keyPublic = config.getProperty(CONFIG_KEY_PUBLIC);
+            String passphrase = config.getProperty(CONFIG_PASSPHRASE);
+            String knownHosts = config.getProperty(CONFIG_KNOWN_HOSTS);
             String host = config.getProperty(CONFIG_HOST);
             Integer port = Integer.valueOf(config.getProperty(CONFIG_PORT));
 
             assert host!=null;
             assert port!=null;
 
-            boolean useKey = (key!=null && !"".equals(key.trim()));
-
-            if(useKey) {
-                jsch.addIdentity(key);
-            }
+            boolean useKey = (keyPrivate!=null && !"".equals(keyPrivate.trim()));
 
             session = jsch.getSession(username, host, port);
 
-            if(!useKey) {
+            jsch.setKnownHosts(knownHosts);
+
+            if(useKey) {
+                if(passphrase==null || "".equals(passphrase.trim())) {
+                    jsch.addIdentity(keyPrivate, keyPublic);
+                } else {
+                    jsch.addIdentity(keyPrivate, keyPublic, passphrase.getBytes());
+                }
+            } else {
                 session.setPassword(password);
             }
 

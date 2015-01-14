@@ -86,8 +86,17 @@ public class JdbcSshConfiguration {
         if(c.getProperty(CONFIG_PASSWORD)==null) {
             c.put(CONFIG_PASSWORD, System.getProperty(CONFIG_PASSWORD));
         }
-        if(c.getProperty(CONFIG_KEY)==null) {
-            c.put(CONFIG_KEY, getSystemPropertyOrDefault(CONFIG_KEY, ""));
+        if(c.getProperty(CONFIG_KEY_PRIVATE)==null) {
+            c.put(CONFIG_KEY_PRIVATE, getSystemPropertyOrDefault(CONFIG_KEY_PRIVATE, ""));
+        }
+        if(c.getProperty(CONFIG_KEY_PUBLIC)==null) {
+            c.put(CONFIG_KEY_PUBLIC, getSystemPropertyOrDefault(CONFIG_KEY_PUBLIC, c.getProperty(CONFIG_KEY_PRIVATE) + ".pub"));
+        }
+        if(c.getProperty(CONFIG_PASSPHRASE)==null) {
+            c.put(CONFIG_PASSPHRASE, getSystemPropertyOrDefault(CONFIG_PASSPHRASE, ""));
+        }
+        if(c.getProperty(CONFIG_KNOWN_HOSTS)==null) {
+            c.put(CONFIG_KNOWN_HOSTS, getSystemPropertyOrDefault(CONFIG_KNOWN_HOSTS, "~/.ssh/known_hosts"));
         }
 
         return c;
