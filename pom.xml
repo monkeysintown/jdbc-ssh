@@ -5,7 +5,7 @@
     <groupId>com.m11n.jdbc.ssh</groupId>
     <artifactId>jdbc-ssh</artifactId>
     <name>JDBC SSH</name>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <packaging>jar</packaging>
     <url>https://github.com/monkeysintown/jdbc-ssh</url>
