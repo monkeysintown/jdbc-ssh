@@ -9,3 +9,4 @@ atlassian-ide-plugin.xml
 *.iml
 build.sh
 trace.db
+derby.log
