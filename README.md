@@ -44,7 +44,7 @@ You can find the latest releases here:
 </dependency>
 ```
 
-... and configure the Bintray's JCenter repository in your pom.xml:
+... and configure Bintray's JCenter repository in your pom.xml:
  
 ```xml
 ...
