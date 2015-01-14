@@ -133,64 +133,115 @@
             </resource>
         </resources>
 
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.2</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>external.atlassian.jgitflow</groupId>
+                    <artifactId>jgitflow-maven-plugin</artifactId>
+                    <version>1.0-m4.3</version>
+                    <configuration>
+                        <allowSnapshots>true</allowSnapshots>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <pushReleases>true</pushReleases>
+                        <noDeploy>false</noDeploy>
+                        <noReleaseBuild>false</noReleaseBuild>
+                        <noFeatureBuild>false</noFeatureBuild>
+                        <noHotfixBuild>false</noHotfixBuild>
+                        <useReleaseProfile>true</useReleaseProfile>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.10.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>test-jar</goal>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <doclet>org.asciidoctor.Asciidoclet</doclet>
+                        <docletArtifact>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoclet</artifactId>
+                            <version>1.5.1</version>
+                        </docletArtifact>
+                        <overview>src/main/java/overview.ad</overview>
+                        <additionalparam>
+                            --base-dir ${project.basedir}
+                            --attribute "name=${project.name}"
+                            --attribute "version=${project.version}"
+                            --attribute "title-link=${project.url}[${project.name} ${project.version}]"
+                        </additionalparam>
+                        <linksource>true</linksource>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.5</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
 
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>test-jar</goal>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <source>${java.version}</source>
-                    <doclet>org.asciidoctor.Asciidoclet</doclet>
-                    <docletArtifact>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoclet</artifactId>
-                        <version>1.5.1</version>
-                    </docletArtifact>
-                    <overview>src/main/java/overview.ad</overview>
-                    <additionalparam>
-                        --base-dir ${project.basedir}
-                        --attribute "name=${project.name}"
-                        --attribute "version=${project.version}"
-                        --attribute "title-link=${project.url}[${project.name} ${project.version}]"
-                    </additionalparam>
-                    <linksource>true</linksource>
-                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>external.atlassian.jgitflow</groupId>
                 <artifactId>jgitflow-maven-plugin</artifactId>
-                <version>1.0-m4.3</version>
-                <configuration>
-                    <allowSnapshots>true</allowSnapshots>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <pushReleases>true</pushReleases>
-                    <noDeploy>false</noDeploy>
-                    <noReleaseBuild>false</noReleaseBuild>
-                    <noFeatureBuild>false</noFeatureBuild>
-                    <noHotfixBuild>false</noHotfixBuild>
-                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release-profile</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
