@@ -8,11 +8,9 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <packaging>jar</packaging>
-    <url></url>
+    <url>https://github.com/monkeysintown/jdbc-ssh</url>
 
     <properties>
-        <bintray.repo></bintray.repo>
-        <bintray.package></bintray.package>
         <slf4j.version>1.7.10</slf4j.version>
         <logback.version>1.1.2</logback.version>
         <jsch.version>0.1.51</jsch.version>
@@ -24,7 +22,7 @@
     <distributionManagement>
         <repository>
             <id>bintray</id>
-            <url>https://api.bintray.com/maven/${bintray.repo}/${bintray.package}</url>
+            <url>https://api.bintray.com/maven/cheetah/monkeysintown/jdbc-ssh</url>
         </repository>
     </distributionManagement>
 
@@ -72,6 +70,27 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.183</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.11.1.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbynet</artifactId>
+            <version>10.11.1.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>10.11.1.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -124,6 +143,20 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m4.3</version>
+                <configuration>
+                    <allowSnapshots>true</allowSnapshots>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <pushReleases>true</pushReleases>
+                    <noDeploy>false</noDeploy>
+                    <noReleaseBuild>false</noReleaseBuild>
+                    <noFeatureBuild>false</noFeatureBuild>
+                    <noHotfixBuild>false</noHotfixBuild>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
