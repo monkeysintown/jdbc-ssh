@@ -8,5 +8,6 @@ atlassian-ide-plugin.xml
 .idea
 *.iml
 build.sh
+release.sh
 trace.db
 derby.log
