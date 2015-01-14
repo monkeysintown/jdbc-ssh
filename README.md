@@ -27,3 +27,17 @@ mvn -Djdbc.ssh.username="xxx" -Djdbc.ssh.password="xxx" -Djdbc.ssh.host="192.168
 
 At the moment a locally running SSH server is needed for the tests. The embedded SSH server in the unit tests is not yet 
 ready (authentication works, but port forwarding fails at the moment).
+
+## Maven dependencies
+
+You can find the latest releases here:
+
+[ ![Download](https://api.bintray.com/packages/cheetah/monkeysintown/jdbc-ssh/images/download.svg) ](https://bintray.com/cheetah/monkeysintown/jdbc-ssh/_latestVersion)
+
+```xml
+<dependency>
+    <groupId>com.m11n.jdbc.ssh</groupId>
+    <artifactId>jdbc-ssh</artifactId>
+    <version>1.0.1</version>
+</dependency>
+```
