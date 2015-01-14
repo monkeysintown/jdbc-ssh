@@ -1,7 +1,8 @@
 package com.m11n.jdbc.ssh;
 
+import com.m11n.jdbc.ssh.util.Slf4jDerbyBridge;
+import com.m11n.jdbc.ssh.util.Slf4jOutputStream;
 import org.apache.derby.drda.NetworkServerControl;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -32,8 +33,19 @@ public class DerbyJdbcSshDriverTest extends JdbcSshDriverTest {
         System.setProperty("derby.drda.startNetworkServer", "true");
         System.setProperty("jdbc.ssh.port.auto", "30000");
 
-        dbServerDerby = new NetworkServerControl(InetAddress.getByName("localhost"),1527);
-        dbServerDerby.start(new PrintWriter(System.out, true));
+        Slf4jDerbyBridge.setLogger(logger);
+        System.setProperty("derby.stream.error.method", Slf4jDerbyBridge.class.getName() + ".bridge");
+
+        if(logger.isTraceEnabled()) {
+            // see here for more options: http://wiki.apache.org/db-derby/DebugPropertiesTmpl
+            System.setProperty("derby.drda.logConnections", "true");
+            System.setProperty("derby.language.logStatementText", "true");
+            System.setProperty("derby.language.logQueryPlan", "true");
+            System.setProperty("derby.locks.deadlockTrace", "true");
+        }
+
+        dbServerDerby = new NetworkServerControl(InetAddress.getByName("localhost"), 1527);
+        dbServerDerby.start(new PrintWriter(new Slf4jOutputStream(logger), true));
 
         for (int i = 0; i < 10; ++i) {
             try {
