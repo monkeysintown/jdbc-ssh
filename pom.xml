@@ -10,6 +10,10 @@
     <packaging>jar</packaging>
     <url>https://github.com/monkeysintown/jdbc-ssh</url>
 
+    <prerequisites>
+        <maven>3.2.3</maven>
+    </prerequisites>
+
     <properties>
         <slf4j.version>1.7.10</slf4j.version>
         <logback.version>1.1.2</logback.version>
