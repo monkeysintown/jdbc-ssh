@@ -63,19 +63,18 @@ public class JdbcSshTunnel {
             Channel channel = session.openChannel("shell");
             channel.connect();
 
-            //Integer localPort = Integer.valueOf(config.getProperty(CONFIG_PORT_LOCAL));
             String forwardHost = config.getProperty(CONFIG_HOST_REMOTE);
             Integer remotePort = Integer.valueOf(config.getProperty(CONFIG_PORT_REMOTE));
 
             assignedPort = session.setPortForwardingL(localPort.incrementAndGet(), forwardHost, remotePort);
 
             if(logger.isDebugEnabled()) {
-                logger.info("Server version: {}", session.getServerVersion());
-                logger.info("Client version: {}", session.getClientVersion());
-                logger.info("Host          : {}", session.getHost());
-                logger.info("Port          : {}", session.getPort());
-                logger.info("Forwarding    : {}", session.getPortForwardingL());
-                logger.info("Connected     : {}", session.isConnected());
+                logger.debug("Server version: {}", session.getServerVersion());
+                logger.debug("Client version: {}", session.getClientVersion());
+                logger.debug("Host          : {}", session.getHost());
+                logger.debug("Port          : {}", session.getPort());
+                logger.debug("Forwarding    : {}", session.getPortForwardingL());
+                logger.debug("Connected     : {}", session.isConnected());
             }
         } catch (Exception e) {
             logger.error(e.toString(), e);
