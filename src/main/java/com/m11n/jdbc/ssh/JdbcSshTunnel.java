@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.m11n.jdbc.ssh.Constants.*;
+import static com.m11n.jdbc.ssh.JdbcSshConfiguration.*;
 
 public class JdbcSshTunnel {
     private static final Logger logger = LoggerFactory.getLogger(JdbcSshTunnel.class);
