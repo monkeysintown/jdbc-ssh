@@ -41,3 +41,20 @@ You can find the latest releases here:
     <version>1.0.1</version>
 </dependency>
 ```
+
+Setup the Bintrays JCenter repository in your pom.xml:
+ 
+```xml
+...
+<repositories>
+    <repository>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+        <id>central</id>
+        <name>bintray</name>
+        <url>http://jcenter.bintray.com</url>
+    </repository>
+</repositories>
+...
+```
