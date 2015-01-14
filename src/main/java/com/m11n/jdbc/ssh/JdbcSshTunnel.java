@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.m11n.jdbc.ssh.Constants.*;
+import static com.m11n.jdbc.ssh.JdbcSshConfiguration.*;
 
 public class JdbcSshTunnel {
     private static final Logger logger = LoggerFactory.getLogger(JdbcSshTunnel.class);
@@ -45,16 +45,31 @@ public class JdbcSshTunnel {
 
             String username = config.getProperty(CONFIG_USERNAME);
             String password = config.getProperty(CONFIG_PASSWORD);
+            String keyPrivate = config.getProperty(CONFIG_KEY_PRIVATE);
+            String keyPublic = config.getProperty(CONFIG_KEY_PUBLIC);
+            String passphrase = config.getProperty(CONFIG_PASSPHRASE);
+            String knownHosts = config.getProperty(CONFIG_KNOWN_HOSTS);
             String host = config.getProperty(CONFIG_HOST);
             Integer port = Integer.valueOf(config.getProperty(CONFIG_PORT));
 
-            // TODO: password-less login
-            assert username!=null;
-            assert password!=null;
             assert host!=null;
+            assert port!=null;
+
+            boolean useKey = (keyPrivate!=null && !"".equals(keyPrivate.trim()));
 
             session = jsch.getSession(username, host, port);
-            session.setPassword(password);
+
+            jsch.setKnownHosts(knownHosts);
+
+            if(useKey) {
+                if(passphrase==null || "".equals(passphrase.trim())) {
+                    jsch.addIdentity(keyPrivate, keyPublic);
+                } else {
+                    jsch.addIdentity(keyPrivate, keyPublic, passphrase.getBytes());
+                }
+            } else {
+                session.setPassword(password);
+            }
 
             session.setConfig(config.getProperties());
             session.setDaemonThread(true);
@@ -88,6 +103,7 @@ public class JdbcSshTunnel {
                 logger.debug("Port          : {}", session.getPort());
                 logger.debug("Forwarding    : {}", session.getPortForwardingL());
                 logger.debug("Connected     : {}", session.isConnected());
+                logger.debug("Private key   : {}", useKey);
             }
         } catch (Exception e) {
             logger.error(e.toString(), e);

@@ -18,6 +18,8 @@ import java.util.Properties;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import static com.m11n.jdbc.ssh.JdbcSshConfiguration.*;
+
 public abstract class JdbcSshDriverTest {
     private static final Logger logger = LoggerFactory.getLogger(JdbcSshDriverTest.class);
 
@@ -43,8 +45,8 @@ public abstract class JdbcSshDriverTest {
                     return new UnknownCommand(command);
                 }
             });
-            sshd.setHost(p.getProperty(Constants.CONFIG_HOST));
-            sshd.setPort(Integer.valueOf(p.getProperty(Constants.CONFIG_PORT)));
+            sshd.setHost(p.getProperty(CONFIG_HOST));
+            sshd.setPort(Integer.valueOf(p.getProperty(CONFIG_PORT)));
             sshd.start();
         }
     }

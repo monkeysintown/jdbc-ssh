@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import static com.m11n.jdbc.ssh.Constants.*;
+import static com.m11n.jdbc.ssh.JdbcSshConfiguration.*;
 
 public class JdbcSshDriver implements Driver {
     private static final int VERSION_MAJOR = 1;

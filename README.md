@@ -27,3 +27,40 @@ mvn -Djdbc.ssh.username="xxx" -Djdbc.ssh.password="xxx" -Djdbc.ssh.host="192.168
 
 At the moment a locally running SSH server is needed for the tests. The embedded SSH server in the unit tests is not yet 
 ready (authentication works, but port forwarding fails at the moment).
+
+## Maven dependencies
+
+You can find the latest releases here:
+
+[ ![Download](https://api.bintray.com/packages/cheetah/monkeysintown/jdbc-ssh/images/download.svg) ](https://bintray.com/cheetah/monkeysintown/jdbc-ssh/_latestVersion)
+
+... or setup your Maven dependencies:
+
+```xml
+<dependency>
+    <groupId>com.m11n.jdbc.ssh</groupId>
+    <artifactId>jdbc-ssh</artifactId>
+    <version>1.0.1</version>
+</dependency>
+```
+
+... and configure Bintray's JCenter repository in your pom.xml:
+ 
+```xml
+...
+<repositories>
+    <repository>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+        <id>central</id>
+        <name>bintray</name>
+        <url>http://jcenter.bintray.com</url>
+    </repository>
+</repositories>
+...
+```
+
+Get automatic notifications about new releases here:
+
+[ ![Get automatic notifications about new "jdbc-ssh" versions](https://www.bintray.com/docs/images/bintray_badge_color.png) ](https://bintray.com/cheetah/monkeysintown/jdbc-ssh/view?source=watch)
