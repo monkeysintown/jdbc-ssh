@@ -60,3 +60,7 @@ You can find the latest releases here:
 </repositories>
 ...
 ```
+
+Get automatic notifications about new releases here:
+
+[ ![Get automatic notifications about new "jdbc-ssh" versions](https://www.bintray.com/docs/images/bintray_badge_color.png) ](https://bintray.com/cheetah/monkeysintown/jdbc-ssh/view?source=watch)
