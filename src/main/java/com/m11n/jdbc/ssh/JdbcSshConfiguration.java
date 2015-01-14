@@ -86,6 +86,9 @@ public class JdbcSshConfiguration {
         if(c.getProperty(CONFIG_PASSWORD)==null) {
             c.put(CONFIG_PASSWORD, System.getProperty(CONFIG_PASSWORD));
         }
+        if(c.getProperty(CONFIG_KEY)==null) {
+            c.put(CONFIG_KEY, System.getProperty(CONFIG_KEY));
+        }
 
         return c;
     }

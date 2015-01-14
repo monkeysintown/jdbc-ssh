@@ -7,6 +7,7 @@ public final class Constants {
     public static final String CONFIG_PORT = "jdbc.ssh.port";
     public static final String CONFIG_USERNAME = "jdbc.ssh.username";
     public static final String CONFIG_PASSWORD = "jdbc.ssh.password";
+    public static final String CONFIG_KEY = "jdbc.ssh.key";
     public static final String CONFIG_HOST_REMOTE = "jdbc.ssh.host.remote";
     public static final String CONFIG_PORT_REMOTE = "jdbc.ssh.port.remote";
     public static final String CONFIG_PORT_AUTO = "jdbc.ssh.port.auto";

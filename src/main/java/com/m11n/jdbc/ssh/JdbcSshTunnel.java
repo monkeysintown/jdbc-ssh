@@ -45,16 +45,24 @@ public class JdbcSshTunnel {
 
             String username = config.getProperty(CONFIG_USERNAME);
             String password = config.getProperty(CONFIG_PASSWORD);
+            String key = config.getProperty(CONFIG_KEY);
             String host = config.getProperty(CONFIG_HOST);
             Integer port = Integer.valueOf(config.getProperty(CONFIG_PORT));
 
-            // TODO: password-less login
-            assert username!=null;
-            assert password!=null;
             assert host!=null;
+            assert port!=null;
+
+            boolean useKey = (key!=null && !"".equals(key.trim()));
+
+            if(useKey) {
+                jsch.addIdentity(key);
+            }
 
             session = jsch.getSession(username, host, port);
-            session.setPassword(password);
+
+            if(!useKey) {
+                session.setPassword(password);
+            }
 
             session.setConfig(config.getProperties());
             session.setDaemonThread(true);
@@ -88,6 +96,7 @@ public class JdbcSshTunnel {
                 logger.debug("Port          : {}", session.getPort());
                 logger.debug("Forwarding    : {}", session.getPortForwardingL());
                 logger.debug("Connected     : {}", session.isConnected());
+                logger.debug("Private key   : {}", useKey);
             }
         } catch (Exception e) {
             logger.error(e.toString(), e);
