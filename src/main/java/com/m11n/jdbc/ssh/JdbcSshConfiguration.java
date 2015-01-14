@@ -10,6 +10,13 @@ import java.util.Properties;
 
 import static com.m11n.jdbc.ssh.Constants.*;
 
+/**
+ * = JdbcSshConfiguration
+ *
+ * A think wrapper around `java.util.Properties`.
+ *
+ * @author https://github.com/vidakovic[Aleksandar Vidakovic]
+ */
 public class JdbcSshConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(JdbcSshConfiguration.class);
 
