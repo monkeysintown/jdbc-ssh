@@ -14,7 +14,7 @@ public final class Constants {
     public static final String CONFIG_HOST_REMOTE = "jdbc.ssh.host.remote";
     public static final String CONFIG_PORT_REMOTE = "jdbc.ssh.port.remote";
     public static final String CONFIG_PORT_AUTO = "jdbc.ssh.port.auto";
-    public static final String[] CONFIG_ALL = {CONFIG_PORT_AUTO, CONFIG_HOST, CONFIG_HOST_REMOTE, CONFIG_PASSWORD, CONFIG_PORT, CONFIG_PORT_REMOTE, CONFIG_USERNAME};
+    public static final String[] CONFIG_ALL = {CONFIG_PORT_AUTO, CONFIG_HOST, CONFIG_HOST_REMOTE, CONFIG_PASSWORD, CONFIG_PORT, CONFIG_PORT_REMOTE, CONFIG_USERNAME, CONFIG_KEY_PRIVATE, CONFIG_KEY_PUBLIC, CONFIG_PASSPHRASE, CONFIG_KNOWN_HOSTS};
 
     private Constants() {
     }
