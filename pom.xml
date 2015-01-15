@@ -4,7 +4,7 @@
 
     <groupId>com.github.monkeysintown</groupId>
     <artifactId>jdbc-ssh</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
 
     <packaging>jar</packaging>
     <name>JDBC SSH</name>
@@ -331,9 +331,9 @@
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>
-                            <phase>deploy</phase>
+                            <phase>verify</phase>
                             <goals>
-                                <goal>sign-and-deploy-file</goal>
+                                <goal>sign</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -374,7 +374,10 @@
         <profile>
             <id>release-profile</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
             </activation>
             <build>
                 <plugins>
