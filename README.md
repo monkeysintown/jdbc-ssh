@@ -40,7 +40,7 @@ You can find the latest releases here:
 <dependency>
     <groupId>com.m11n.jdbc.ssh</groupId>
     <artifactId>jdbc-ssh</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.7</version>
 </dependency>
 ```
 
