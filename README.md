@@ -1,6 +1,6 @@
 # jdbc-ssh
 
-JDBC driver over SSH tunnel [Maven Central](https://img.shields.io/maven-central/v/com.github.monkeysintown/jdbc-ssh.svg)
+JDBC driver over SSH tunnel ![Maven Central](https://img.shields.io/maven-central/v/com.github.monkeysintown/jdbc-ssh.svg)
 
 
 ## Build
