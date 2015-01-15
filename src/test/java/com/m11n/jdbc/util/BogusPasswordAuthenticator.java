@@ -1,4 +1,4 @@
-package com.m11n.jdbc.ssh.util;
+package com.m11n.jdbc.util;
 
 import org.apache.sshd.server.PasswordAuthenticator;
 import org.apache.sshd.server.session.ServerSession;

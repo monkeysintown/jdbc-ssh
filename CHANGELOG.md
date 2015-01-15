@@ -1,3 +1,7 @@
+1.0.3 (in progress)
+
+- 
+
 1.0.2
 
 - passwordless logins

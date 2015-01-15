@@ -1,4 +1,4 @@
-package com.m11n.jdbc.ssh.util;
+package com.m11n.jdbc.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,24 +24,12 @@ public class Slf4jDerbyBridge {
         @Override
         public void write(final char[] buf, final int off, final int len)
         {
-            // Don't bother with empty lines.
+            // skip empty lines.
             if (len > 1)
             {
                 String message = new String(buf, off, len);
 
-                if(logger.isTraceEnabled()) {
-                    logger.trace(message);
-                } else if(logger.isDebugEnabled()) {
-                    logger.debug(message);
-                } else if(logger.isInfoEnabled()) {
-                    logger.info(message);
-                } else if(logger.isWarnEnabled()) {
-                    logger.warn(message);
-                } else if(logger.isErrorEnabled()) {
-                    logger.error(message);
-                } else {
-                    logger.info(message);
-                }
+                logger.trace(message);
             }
         }
 
