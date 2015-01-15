@@ -4,7 +4,7 @@
 
     <groupId>com.github.monkeysintown</groupId>
     <artifactId>jdbc-ssh</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.4-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>JDBC SSH</name>
@@ -34,7 +34,7 @@
         <developer>
             <id>vidakovic</id>
             <name>Aleksandar Vidakovic</name>
-            <email></email>
+            <email />
             <url>https://github.com/vidakovic</url>
             <organization>Monkeys in Town Lda.</organization>
             <organizationUrl>https://github.com/monkeysintown</organizationUrl>
