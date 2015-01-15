@@ -4,7 +4,7 @@
 
     <groupId>com.github.monkeysintown</groupId>
     <artifactId>jdbc-ssh</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <packaging>jar</packaging>
     <name>JDBC SSH</name>
@@ -333,7 +333,7 @@
                             <id>sign-artifacts</id>
                             <phase>install</phase>
                             <goals>
-                                <goal>sign</goal>
+                                <goal>sign-and-deploy-file</goal>
                             </goals>
                         </execution>
                     </executions>
