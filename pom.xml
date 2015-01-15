@@ -27,7 +27,7 @@
     <scm>
         <connection>scm:git:https://github.com/monkeysintown/jdbc-ssh.git</connection>
         <developerConnection>scm:git:https://github.com/monkeysintown/jdbc-ssh.git</developerConnection>
-        <url>scm:git:https://github.com/monkeysintown/jdbc-ssh</url>
+        <url>https://github.com/monkeysintown/jdbc-ssh</url>
     </scm>
 
     <developers>
