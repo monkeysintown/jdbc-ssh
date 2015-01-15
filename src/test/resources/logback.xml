@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.m11n.jdbc" level="TRACE" />
+    <logger name="com.m11n.jdbc" level="DEBUG" />
     <logger name="org.apache.sshd" level="DEBUG" />
 
     <root level="ERROR">

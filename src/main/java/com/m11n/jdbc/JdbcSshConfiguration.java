@@ -3,10 +3,8 @@ package com.m11n.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Properties;
+import java.io.*;
+import java.util.*;
 
 /**
  * = JdbcSshConfiguration
@@ -31,11 +29,14 @@ public class JdbcSshConfiguration {
     public static final String CONFIG_HOST_REMOTE = "jdbc.ssh.host.remote";
     public static final String CONFIG_PORT_REMOTE = "jdbc.ssh.port.remote";
     public static final String CONFIG_PORT_AUTO = "jdbc.ssh.port.auto";
-    public static final String[] CONFIG_ALL = {CONFIG_PORT_AUTO, CONFIG_HOST, CONFIG_HOST_REMOTE, CONFIG_PASSWORD, CONFIG_PORT, CONFIG_PORT_REMOTE, CONFIG_USERNAME, CONFIG_KEY_PRIVATE, CONFIG_KEY_PUBLIC, CONFIG_PASSPHRASE, CONFIG_KNOWN_HOSTS};
 
     private Properties config;
 
+    private final Set<String> allowed = new HashSet<>();
+
     public JdbcSshConfiguration() {
+        importAllowedPropertyNames();
+
         config = new Properties();
 
         try {
@@ -55,6 +56,8 @@ public class JdbcSshConfiguration {
                 config.load(is);
             }
 
+            check(config);
+
             config = setDefaults(config);
         } catch(Exception e) {
             logger.warn(e.toString(), e);
@@ -72,13 +75,31 @@ public class JdbcSshConfiguration {
             config.setProperty(CONFIG_PASSWORD, c.getProperty("password"));
         }
 
-        for(String key : CONFIG_ALL) {
+        for(String key : allowed) {
             if(c.getProperty(key)!=null && !"".equals(c.getProperty(key).trim())) {
                 config.setProperty(key, c.getProperty(key));
             }
         }
 
-        logger.debug("Configuration: {}");
+        if(logger.isDebugEnabled()) {
+            logger.debug("Configuration: {}", config);
+        }
+    }
+
+    private void importAllowedPropertyNames() {
+        try {
+            allowed.clear();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(JdbcSshConfiguration.class.getClassLoader().getResourceAsStream("PROPERTIES")));
+
+            String line;
+
+            while((line=reader.readLine())!=null) {
+                allowed.add(line);
+            }
+        } catch(Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Properties setDefaults(Properties c) {
@@ -120,6 +141,17 @@ public class JdbcSshConfiguration {
         }
 
         return c;
+    }
+
+    private void check(Properties c) {
+        Enumeration<Object> keys = c.keys();
+        while(keys.hasMoreElements()) {
+            String key = keys.nextElement().toString();
+            if(!allowed.contains(key)) {
+                logger.warn("Skipping property: {}", key);
+                c.remove(key);
+            }
+        }
     }
 
     private String getSystemPropertyOrDefault(String name, String defaultValue) {
