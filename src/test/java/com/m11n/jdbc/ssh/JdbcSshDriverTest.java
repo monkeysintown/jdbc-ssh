@@ -1,5 +1,6 @@
 package com.m11n.jdbc.ssh;
 
+import com.m11n.jdbc.JdbcSshDriver;
 import com.m11n.jdbc.ssh.util.BogusPasswordAuthenticator;
 import com.m11n.jdbc.ssh.util.TestCachingPublicKeyAuthenticator;
 import org.apache.sshd.SshServer;
@@ -18,7 +19,7 @@ import java.util.Properties;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import static com.m11n.jdbc.ssh.JdbcSshConfiguration.*;
+import static com.m11n.jdbc.JdbcSshConfiguration.*;
 
 public abstract class JdbcSshDriverTest {
     private static final Logger logger = LoggerFactory.getLogger(JdbcSshDriverTest.class);

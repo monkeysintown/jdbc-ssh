@@ -1,4 +1,4 @@
-package com.m11n.jdbc.ssh;
+package com.m11n.jdbc;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.m11n.jdbc.ssh.JdbcSshConfiguration.*;
+import static com.m11n.jdbc.JdbcSshConfiguration.*;
 
 public class JdbcSshTunnel {
     private static final Logger logger = LoggerFactory.getLogger(JdbcSshTunnel.class);
