@@ -7,9 +7,8 @@
         </encoder>
     </appender>
 
-    <logger name="com.m11n.jdbc.ssh" level="DEBUG" />
+    <logger name="com.m11n.jdbc" level="TRACE" />
     <logger name="org.apache.sshd" level="DEBUG" />
-    <logger name="org.apache.derby" level="DEBUG" />
 
     <root level="ERROR">
         <appender-ref ref="STDOUT" />
