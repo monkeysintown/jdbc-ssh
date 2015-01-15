@@ -2,7 +2,7 @@
 :linkattrs:
 :version: 1.0.7
 
-JDBC driver over SSH tunnel.
+JDBC driver over SSH tunnel. ![Maven Central](https://img.shields.io/maven-central/v/com.github.monkeysintown/jdbc-ssh.svg)
 
 == Build
 
