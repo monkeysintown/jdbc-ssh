@@ -331,9 +331,9 @@
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>
-                            <phase>deploy</phase>
+                            <phase>verify</phase>
                             <goals>
-                                <goal>sign-and-deploy-file</goal>
+                                <goal>sign</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -374,7 +374,10 @@
         <profile>
             <id>release-profile</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
             </activation>
             <build>
                 <plugins>
