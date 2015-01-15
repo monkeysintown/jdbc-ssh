@@ -9,11 +9,11 @@
     <packaging>jar</packaging>
     <name>JDBC SSH</name>
     <description>JDBC over SSH</description>
-    <url>https://github.com/monkeysintown/jdbc-ssh</url>
+    <url>https://monkeysintown.github.io/jdbc-ssh</url>
 
     <licenses>
         <license>
-            <name>Apache 2</name>
+            <name>Apache 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
         </license>
@@ -66,6 +66,13 @@
             <url>https://api.bintray.com/maven/cheetah/monkeysintown/jdbc-ssh</url>
         </repository>
     </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>rubygems-release</id>
+            <url>http://rubygems-proxy.torquebox.org/releases</url>
+        </repository>
+    </repositories>
 
     <dependencies>
 
@@ -221,6 +228,92 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>2.7</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>1.5.2</version>
+                    <configuration>
+                        <baseDir>${project.build.directory}/generated-docs/asciidoc</baseDir>
+                        <sourceDirectory>${project.build.directory}/generated-docs/asciidoc</sourceDirectory>
+                        <sourceDocumentName>index.ad</sourceDocumentName>
+                        <gemPath>${project.build.directory}/gems-provided</gemPath>
+                        <!-- Attributes common to all output formats -->
+                        <attributes>
+                            <numbered>true</numbered>
+                            <experimental>true</experimental>
+                            <encoding>UTF-8</encoding>
+                            <imagesdir>images</imagesdir>
+                            <!-- TODO: replace toc2 / toc-position with toc=left after upgrade to 1.5.0 -->
+                            <pagenums />
+                            <toc2>true</toc2>
+                            <toc-position>left</toc-position>
+                            <icons>font</icons>
+                            <sectanchors>true</sectanchors>
+                            <idprefix />
+                            <idseparator>-</idseparator>
+                            <docinfo1>true</docinfo1>
+                            <publish-url>${project.url}</publish-url>
+                            <sourcedir>${project.build.sourceDirectory}</sourcedir>
+                            <!-- WARNING callout bullets don't yet work with CodeRay -->
+                            <source-highlighter>coderay</source-highlighter>
+                        </attributes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>asciidoc-to-docbook</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/generated-docs/docbook/en-US</outputDirectory>
+                                <backend>docbook5</backend>
+                                <doctype>book</doctype>
+                                <templateEngine>slim</templateEngine>
+                                <headerFooter>true</headerFooter>
+                                <compact>false</compact>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>asciidoc-to-html5</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/generated-docs/html5</outputDirectory>
+                                <backend>html5</backend>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>asciidoc-to-pdf</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <gemPath>${project.build.directory}/gems</gemPath>
+                                <requires>
+                                    <require>asciidoctor-pdf</require>
+                                </requires>
+                                <backend>pdf</backend>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj</artifactId>
+                            <version>1.5.2</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.jruby</groupId>
+                            <artifactId>jruby-complete</artifactId>
+                            <version>1.7.18</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>

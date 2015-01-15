@@ -1,6 +1,6 @@
 == Overview
 :linkattrs:
-:version: 1.0.0
+:version: 1.0.7
 
 JDBC driver over SSH tunnel.
 
