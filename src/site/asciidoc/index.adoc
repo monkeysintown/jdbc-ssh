@@ -1,6 +1,6 @@
 == Overview
 :linkattrs:
-:version: 1.0.7
+:version: 1.0.8
 
 JDBC driver over SSH tunnel. ![Maven Central](https://img.shields.io/maven-central/v/com.github.monkeysintown/jdbc-ssh.svg)
 
@@ -41,7 +41,7 @@ https://bintray.com/cheetah/monkeysintown/jdbc-ssh/_latestVersion[ image:https:/
 [source,xml,subs="specialcharacters,attributes,callouts"]
 ----
 <dependency>
-    <groupId>com.m11n.jdbc.ssh</groupId>
+    <groupId>com.github.monkeysintown</groupId>
     <artifactId>jdbc-ssh</artifactId>
     <version>{version}</version>
 </dependency>

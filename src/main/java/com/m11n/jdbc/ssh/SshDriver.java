@@ -7,22 +7,22 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import static com.m11n.jdbc.ssh.JdbcSshConfiguration.*;
+import static com.m11n.jdbc.ssh.SshConfiguration.*;
 
-public class JdbcSshDriver implements Driver {
+public class SshDriver implements Driver {
     private static final int VERSION_MAJOR = 1;
     private static final int VERSION_MINOR = 0;
 
-    private JdbcSshTunnel tunnel;
+    private SshTunnel tunnel;
 
-    public JdbcSshDriver() throws SQLException {
+    public SshDriver() throws SQLException {
     }
 
     static
     {
         try
         {
-            java.sql.DriverManager.registerDriver(new JdbcSshDriver());
+            java.sql.DriverManager.registerDriver(new SshDriver());
         }
         catch (SQLException e)
         {
@@ -49,9 +49,9 @@ public class JdbcSshDriver implements Driver {
             return null;
         }
 
-        JdbcSshConfiguration config = configure(url, info);
+        SshConfiguration config = configure(url, info);
 
-        tunnel = new JdbcSshTunnel(config);
+        tunnel = new SshTunnel(config);
         tunnel.start();
 
         // TODO: check if this is enough for most common drivers
@@ -62,8 +62,8 @@ public class JdbcSshDriver implements Driver {
         return driver.connect(realUrl, config.getProperties());
     }
 
-    private JdbcSshConfiguration configure(String url, Properties info) throws SQLException {
-        JdbcSshConfiguration config;
+    private SshConfiguration configure(String url, Properties info) throws SQLException {
+        SshConfiguration config;
 
         try {
             URL u = toURL(url);
@@ -88,7 +88,7 @@ public class JdbcSshDriver implements Driver {
             properties.setProperty(CONFIG_HOST_REMOTE, u.getHost());
             properties.setProperty(CONFIG_PORT_REMOTE, u.getPort()+"");
 
-            config = new JdbcSshConfiguration(properties);
+            config = new SshConfiguration(properties);
         } catch (Exception e) {
             throw new SQLException(e);
         }

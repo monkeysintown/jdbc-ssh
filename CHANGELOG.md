@@ -1,6 +1,7 @@
-1.0.8 (in progress)
+1.0.8
 
-- 
+- Osgi compatible package structure
+- Constistent naming of classes (should be final now)
 
 1.0.7
 

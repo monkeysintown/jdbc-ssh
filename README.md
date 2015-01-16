@@ -38,9 +38,9 @@ You can find the latest releases here:
 
 ```xml
 <dependency>
-    <groupId>com.m11n.jdbc.ssh</groupId>
+    <groupId>com.github.monkeysintown</groupId>
     <artifactId>jdbc-ssh</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
 </dependency>
 ```
 

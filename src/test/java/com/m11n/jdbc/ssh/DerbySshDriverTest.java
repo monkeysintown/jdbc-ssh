@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 
-public class DerbyJdbcSshDriverTest extends JdbcSshDriverTest {
-    private static final Logger logger = LoggerFactory.getLogger(DerbyJdbcSshDriverTest.class);
+public class DerbySshDriverTest extends JdbcSshDriverTest {
+    private static final Logger logger = LoggerFactory.getLogger(DerbySshDriverTest.class);
 
     private static NetworkServerControl dbServerDerby;
 

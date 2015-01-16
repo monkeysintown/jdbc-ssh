@@ -15,8 +15,8 @@ import java.sql.*;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import static com.m11n.jdbc.ssh.JdbcSshConfiguration.CONFIG_HOST;
-import static com.m11n.jdbc.ssh.JdbcSshConfiguration.CONFIG_PORT;
+import static com.m11n.jdbc.ssh.SshConfiguration.CONFIG_HOST;
+import static com.m11n.jdbc.ssh.SshConfiguration.CONFIG_PORT;
 
 import static org.junit.Assert.*;
 
@@ -34,7 +34,7 @@ public abstract class JdbcSshDriverTest {
     protected static void setUpSshd() throws Exception {
         if(sshd==null && "true".equals(System.getProperty("sshd"))) {
             Properties p = new Properties();
-            p.load(JdbcSshDriver.class.getClassLoader().getResourceAsStream("ssh.properties"));
+            p.load(SshDriver.class.getClassLoader().getResourceAsStream("ssh.properties"));
 
             sshd = SshServer.setUpDefaultServer();
             sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider("target/hostkey.rsa", "RSA"));
@@ -64,7 +64,7 @@ public abstract class JdbcSshDriverTest {
         for(Enumeration<Driver> drivers = DriverManager.getDrivers(); drivers.hasMoreElements();) {
             Driver driver = drivers.nextElement();
 
-            if(driver.getClass().equals(JdbcSshDriver.class)) {
+            if(driver.getClass().equals(SshDriver.class)) {
                 found = true;
                 break;
             }

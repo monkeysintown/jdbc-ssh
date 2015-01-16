@@ -13,8 +13,8 @@ import java.util.*;
  *
  * @author https://github.com/vidakovic[Aleksandar Vidakovic]
  */
-public class JdbcSshConfiguration {
-    private static final Logger logger = LoggerFactory.getLogger(JdbcSshConfiguration.class);
+public class SshConfiguration {
+    private static final Logger logger = LoggerFactory.getLogger(SshConfiguration.class);
 
     public static final String CONFIG = "jdbc.ssh.config";
     public static final String DRIVER_PREFIX = "jdbc:ssh:";
@@ -34,7 +34,7 @@ public class JdbcSshConfiguration {
 
     private final Set<String> allowed = new HashSet<>();
 
-    public JdbcSshConfiguration() {
+    public SshConfiguration() {
         importAllowedPropertyNames();
 
         config = new Properties();
@@ -49,7 +49,7 @@ public class JdbcSshConfiguration {
             if(f.exists()) {
                 is = new FileInputStream(f);
             } else {
-                is = JdbcSshConfiguration.class.getClassLoader().getResourceAsStream(path);
+                is = SshConfiguration.class.getClassLoader().getResourceAsStream(path);
             }
 
             if(is!=null) {
@@ -64,7 +64,7 @@ public class JdbcSshConfiguration {
         }
     }
 
-    public JdbcSshConfiguration(Properties c) {
+    public SshConfiguration(Properties c) {
         this();
 
         // NOTE: assume same username and password for SSH connection and database if not set explicitly
@@ -90,7 +90,7 @@ public class JdbcSshConfiguration {
         try {
             allowed.clear();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(JdbcSshConfiguration.class.getClassLoader().getResourceAsStream("PROPERTIES")));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(SshConfiguration.class.getClassLoader().getResourceAsStream("PROPERTIES")));
 
             String line;
 
