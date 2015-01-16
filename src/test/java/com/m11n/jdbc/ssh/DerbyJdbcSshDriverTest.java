@@ -1,7 +1,7 @@
-package com.m11n.jdbc;
+package com.m11n.jdbc.ssh;
 
-import com.m11n.jdbc.util.Slf4jDerbyBridge;
-import com.m11n.jdbc.util.Slf4jOutputStream;
+import com.m11n.jdbc.ssh.util.Slf4jDerbyBridge;
+import com.m11n.jdbc.ssh.util.Slf4jOutputStream;
 import org.apache.derby.drda.NetworkServerControl;
 import org.junit.AfterClass;
 import org.junit.Before;

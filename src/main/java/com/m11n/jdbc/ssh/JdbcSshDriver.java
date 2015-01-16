@@ -1,4 +1,4 @@
-package com.m11n.jdbc;
+package com.m11n.jdbc.ssh;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import static com.m11n.jdbc.JdbcSshConfiguration.*;
+import static com.m11n.jdbc.ssh.JdbcSshConfiguration.*;
 
 public class JdbcSshDriver implements Driver {
     private static final int VERSION_MAJOR = 1;

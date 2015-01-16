@@ -1,4 +1,4 @@
-package com.m11n.jdbc.util;
+package com.m11n.jdbc.ssh.util;
 
 import org.apache.sshd.common.KeyPairProvider;
 import org.apache.sshd.server.PublickeyAuthenticator;

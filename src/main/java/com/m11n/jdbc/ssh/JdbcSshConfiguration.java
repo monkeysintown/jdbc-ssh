@@ -1,4 +1,4 @@
-package com.m11n.jdbc;
+package com.m11n.jdbc.ssh;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

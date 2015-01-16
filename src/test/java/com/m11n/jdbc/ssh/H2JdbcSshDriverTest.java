@@ -1,4 +1,4 @@
-package com.m11n.jdbc;
+package com.m11n.jdbc.ssh;
 
 import org.h2.tools.Server;
 import org.junit.AfterClass;
