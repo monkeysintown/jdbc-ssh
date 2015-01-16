@@ -1,4 +1,4 @@
-package com.m11n.jdbc;
+package com.m11n.jdbc.ssh;
 
 import org.h2.tools.Server;
 import org.junit.AfterClass;
@@ -7,8 +7,8 @@ import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class H2JdbcSshDriverTest extends JdbcSshDriverTest {
-    private static final Logger logger = LoggerFactory.getLogger(H2JdbcSshDriverTest.class);
+public class H2SshDriverTest extends JdbcSshDriverTest {
+    private static final Logger logger = LoggerFactory.getLogger(H2SshDriverTest.class);
 
     private static Server dbServerH2;
 

@@ -1,6 +1,6 @@
 # jdbc-ssh
 
-JDBC driver over SSH tunnel
+JDBC driver over SSH tunnel. ![Maven Central](https://img.shields.io/maven-central/v/com.github.monkeysintown/jdbc-ssh.svg)
 
 
 ## Build
@@ -38,9 +38,9 @@ You can find the latest releases here:
 
 ```xml
 <dependency>
-    <groupId>com.m11n.jdbc.ssh</groupId>
+    <groupId>com.github.monkeysintown</groupId>
     <artifactId>jdbc-ssh</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.8</version>
 </dependency>
 ```
 

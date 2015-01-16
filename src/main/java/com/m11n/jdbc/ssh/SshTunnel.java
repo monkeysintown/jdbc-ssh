@@ -1,4 +1,4 @@
-package com.m11n.jdbc;
+package com.m11n.jdbc.ssh;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
@@ -10,18 +10,18 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.m11n.jdbc.JdbcSshConfiguration.*;
+import static com.m11n.jdbc.ssh.SshConfiguration.*;
 
-public class JdbcSshTunnel {
-    private static final Logger logger = LoggerFactory.getLogger(JdbcSshTunnel.class);
+public class SshTunnel {
+    private static final Logger logger = LoggerFactory.getLogger(SshTunnel.class);
 
-    private JdbcSshConfiguration config;
+    private SshConfiguration config;
 
     private Session session;
 
     private AtomicInteger localPort;
 
-    public JdbcSshTunnel(JdbcSshConfiguration config) {
+    public SshTunnel(SshConfiguration config) {
         this.config = config;
 
         localPort = new AtomicInteger(Integer.valueOf(config.getProperty(CONFIG_PORT_AUTO)));
@@ -32,7 +32,7 @@ public class JdbcSshTunnel {
             @Override
             public void run() {
                 logger.info("Shutting down tunnel...");
-                JdbcSshTunnel.this.stop();
+                SshTunnel.this.stop();
             }
         });
     }
