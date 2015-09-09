@@ -68,10 +68,10 @@ public class SshConfiguration {
         this();
 
         // NOTE: assume same username and password for SSH connection and database if not set explicitly
-        if(c.getProperty("user")!=null && c.getProperty(CONFIG_USERNAME) == null) {
+        if(c.getProperty("user")!=null && config.getProperty(CONFIG_USERNAME) == null) {
             config.setProperty(CONFIG_USERNAME, c.getProperty("user"));
         }
-        if(c.getProperty("password")!=null && c.getProperty(CONFIG_PASSWORD) == null) {
+        if(c.getProperty("password")!=null && config.getProperty(CONFIG_PASSWORD) == null) {
             config.setProperty(CONFIG_PASSWORD, c.getProperty("password"));
         }
 
