@@ -4,7 +4,7 @@
 
     <groupId>com.github.monkeysintown</groupId>
     <artifactId>jdbc-ssh</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
 
     <packaging>jar</packaging>
     <name>JDBC SSH</name>
@@ -361,6 +361,8 @@
                     <artifactId>jgitflow-maven-plugin</artifactId>
                     <version>1.0-m4.3</version>
                     <configuration>
+                        <username>${github.username}</username>
+                        <password>${github.password}</password>
                         <allowSnapshots>true</allowSnapshots>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <pushReleases>true</pushReleases>

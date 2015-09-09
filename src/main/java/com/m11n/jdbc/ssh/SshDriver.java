@@ -59,7 +59,7 @@ public class SshDriver implements Driver {
         realUrl = realUrl.replaceFirst("://(\\d+\\.\\d+\\.\\d+\\.\\d+|[a-zA-Z0-9_\\-\\.]*)", "://localhost");
         Driver driver = findDriver(realUrl);
 
-        return driver.connect(realUrl, config.getProperties());
+        return driver.connect(realUrl, info);
     }
 
     private SshConfiguration configure(String url, Properties info) throws SQLException {
