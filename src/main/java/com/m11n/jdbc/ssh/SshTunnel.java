@@ -94,7 +94,7 @@ public class SshTunnel {
                 nextPort = localPort.incrementAndGet();
             }
 
-            assignedPort = session.setPortForwardingL(localPort.incrementAndGet(), forwardHost, remotePort);
+            assignedPort = session.setPortForwardingL(nextPort, forwardHost, remotePort);
 
             if(logger.isDebugEnabled()) {
                 logger.debug("Server version: {}", session.getServerVersion());
