@@ -1,3 +1,12 @@
+1.0.10
+
+- bug fix: avoid wrong local port increment (@emac)
+- Update dependencies
+
+1.0.9
+
+- pass original connect properties to real driver and 1 bug fix (@emac)
+
 1.0.8
 
 - Osgi compatible package structure
