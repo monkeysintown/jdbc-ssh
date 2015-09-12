@@ -4,7 +4,7 @@
 
     <groupId>com.github.monkeysintown</groupId>
     <artifactId>jdbc-ssh</artifactId>
-    <version>1.0.11-SNAPSHOT</version>
+    <version>1.0.10</version>
 
     <packaging>jar</packaging>
     <name>JDBC SSH</name>
