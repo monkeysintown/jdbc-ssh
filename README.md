@@ -19,7 +19,7 @@ mvn -Djdbc.ssh.username="xxx" -Djdbc.ssh.password="xxx" clean install
 
 NOTE: 
 
-If your SSH server is not running on the default port 22 and/or localhost then you can change those paramaters:
+If your SSH server is not running on the default port 22 and/or localhost then you can change those parameters:
 
 ```
 mvn -Djdbc.ssh.username="xxx" -Djdbc.ssh.password="xxx" -Djdbc.ssh.host="192.168.0.1" -Djdbc.ssh.port="2222" clean install
